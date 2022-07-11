@@ -2,16 +2,76 @@ const display = document.querySelector('.display');
 const displayPara = document.createElement('p');
 let displayValue = '0';
 displayPara.textContent = displayValue;
-function updateDisplay(char){ // from buttons
-    if(typeof char === 'string'){
-        if(char !== '=') displayValue += char;
-        else{
 
+let nums = [];
+
+let order = [];
+
+
+
+function isOperator(char) {
+    return ['+','-','*','÷'].some( op => char === op);
+}
+
+function process(char){
+    let newStr = '';
+    for (const element of char) {
+        if(isOperator(element)){
+            order.push(element);
+            newStr += ' ';
         }
+        else newStr += element;
     }
-    else if(typeof char == 'number'){
-        if(displayValue !== '0') displayValue += char;
-        else displayValue = char;
+    return newStr;
+}
+
+function reduce(){
+    let n = order.length;
+    for(let i = 0; i < n; i++){
+        let step = operate(nums[0], nums[1], order[0])
+        nums.shift();
+        nums.shift();
+        nums.unshift(step);
+        order.shift();
+    }
+    return nums[0];
+}
+
+function evaluate(char){
+    nums = process(char).split(' ').map(x => parseInt(x));
+    let ans = reduce();
+    return ans;
+}
+
+function updateDisplay(char){ // from buttons
+    let maybeNumber = parseInt(char);
+    if(!isNaN(maybeNumber)){
+        if(displayValue === '0') displayValue = char;
+        else displayValue += maybeNumber;
+    }
+    else{
+        if(isOperator(char)){
+            if(isOperator(displayValue[displayValue.length - 1])) {
+                displayValue = displayValue.slice(0, -1) + char;
+            }
+            else displayValue += char;
+        }
+        else{
+            if(char === 'Clear') {
+                displayValue = '0';
+                nums = [];
+                order = [];
+            }
+            else if(char === 'Delete'){ 
+                if(displayValue.length >= 2) {
+                    displayValue = displayValue.slice(0, -1);
+                }
+                else displayValue = '0';
+            }
+            else{
+                evaluate()
+            }
+        }
     }
     displayPara.textContent = displayValue;
 }
@@ -27,7 +87,7 @@ function multiply(a, b){
     return a * b;
 }
 function divide(a, b){
-    return a / b;    
+    return b === 0 ? null : a / b;    
 }
 
 function operate(a, b, operation){
@@ -42,10 +102,16 @@ function operate(a, b, operation){
         case '*':
             answer = multiply(a,b);
             break;
-        case '/':
+        case '÷':
             answer = divide(a,b);
             break;
     }
     return answer;
 }
 
+const buttons = document.querySelectorAll('button');
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        updateDisplay(button.textContent);
+    });
+});
