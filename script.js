@@ -1,3 +1,22 @@
+const display = document.querySelector('.display');
+const displayPara = document.createElement('p');
+let displayValue = '0';
+displayPara.textContent = displayValue;
+function updateDisplay(char){ // from buttons
+    if(typeof char === 'string'){
+        if(char !== '=') displayValue += char;
+        else{
+
+        }
+    }
+    else if(typeof char == 'number'){
+        if(displayValue !== '0') displayValue += char;
+        else displayValue = char;
+    }
+    displayPara.textContent = displayValue;
+}
+display.appendChild(displayPara);
+
 function add(a, b) {
     return a + b;   
 }
