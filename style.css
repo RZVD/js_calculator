@@ -8,32 +8,58 @@ html, body{
     margin: 0px;
     padding: 0px;
 }
-
 body{
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .calculator{
-    background-color: gray;
-    height: 650px;
+    height: 560px;
     width: 400px;
-    border-radius: 13%;
-
+    border-radius: 15px;
+    background-color: gray;
+    
     display: flex;
     flex-direction: column;
-    
-    
+    padding: 20px;
     align-items: center;
+    border: solid black;
 }
 .display{
-    margin-top: 35px;
     background-color: white;
-    width: 350px;
+    width: 356px;
     height: 120px;
+    border-radius: 5px;
+    border: solid black;
+    padding: 10px;
+
 }
 .buttons{
     display: grid;
     width: 100%;
     height: 100%;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    align-items: center;
+    justify-content: center;
+
+}
+button{
+    border: solid rgb(0, 0, 0);
+}
+.button{
+    padding: 20px;
+    border-radius: 5px;
+    background-color: white;
+
+}
+.clear, .delete {
+    grid-column: span 2;
+}
+
+.clear{
+    background-color: rgb(255, 170, 170);
+}
+.delete{
+    background-color: rgb(170, 170, 255);
 }
