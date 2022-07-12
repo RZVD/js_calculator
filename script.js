@@ -8,7 +8,7 @@ let nums = [];
 let order = [];
 
 let previousOperation = false;
-
+let isFloatingPoint = false;
 function isOperator(char) {
     return ['+','-','*','÷'].some( op => char === op);
 }
@@ -46,6 +46,7 @@ function reduce(){
 }
 
 function evaluate(char){
+    isFloatingPoint = false;
     nums = process(char).split(' ').map(x => parseFloat(x));
     let ans = reduce();
     displayValue = ans;
@@ -84,8 +85,9 @@ function updateDisplay(char){ // from buttons
                 }
                 else displayValue = '0';
             }
-            else if(char === '.'){
+            else if(char === '.' && !isFloatingPoint){
                 displayValue += char;
+                isFloatingPoint = true;
             }
             else{
                 evaluate(displayValue);
