@@ -33,7 +33,10 @@ body{
     border-radius: 5px;
     border: solid black;
     padding: 10px;
+    display: flex;
+    align-items: flex-start;
 
+    justify-content: flex-end;
 }
 .buttons{
     display: grid;

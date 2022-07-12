@@ -144,3 +144,60 @@ buttons.forEach(button => {
         updateDisplay(button.textContent);
     });
 });
+window.addEventListener('keydown', ()=>{
+    console.log(event.which);
+    switch (event.which) {
+        case 48:
+            updateDisplay('0');
+            break;
+        case 49:
+            updateDisplay('1');
+            break;
+        case 50:
+            updateDisplay('2');
+            break;
+        case 51:
+            updateDisplay('3');
+            break;
+        case 52:
+            updateDisplay('4');
+            break;
+        case 53:
+            updateDisplay('5');
+            break;
+        case 54: 
+            updateDisplay('6');
+            break;
+        case 55:
+            updateDisplay('7');
+            break;
+        case 56: 
+            if(event.shiftKey) updateDisplay('*');
+            else updateDisplay('8');   
+            break;
+        case 57:
+            updateDisplay('9');
+            break;                                 
+        case 187:
+            if(event.shiftKey) updateDisplay('+')
+            else updateDisplay('=');
+        break;
+        case 189:
+            updateDisplay('-');
+        break;
+        case 13:
+            updateDisplay('=');
+        break;
+        case 191:
+            updateDisplay('÷');
+            break;
+        case 8:
+            updateDisplay('Delete');
+            break;
+        case 27:
+            updateDisplay('Clear');
+            break;
+        default:
+            break;
+    }
+});
