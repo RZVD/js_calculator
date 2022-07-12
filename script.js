@@ -48,7 +48,7 @@ function reduce(){
 function evaluate(char){
     isFloatingPoint = false;
     nums = process(char).split(' ').map(x => parseFloat(x));
-    let ans = reduce();
+    let ans = Math.floor(reduce() * 100) / 100;
     displayValue = ans;
 }
 
