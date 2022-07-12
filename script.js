@@ -78,6 +78,7 @@ function updateDisplay(char){ // from buttons
                 nums = [];
                 order = [];
                 previousOperation = false;
+                isFloatingPoint = false;
             }
             else if(char === 'Delete'){ 
                 if(displayValue.length >= 2) {
@@ -105,6 +106,7 @@ display.appendChild(displayPara);
 function divByZero(){
     alert("can't divide by 0");
     updateDisplay('Clear');
+    return null;
 }
 function add(a, b) {
     return a + b;   
@@ -197,7 +199,8 @@ window.addEventListener('keydown', ()=>{
         case 27:
             updateDisplay('Clear');
             break;
-        default:
+        case 190:
+            updateDisplay('.');
             break;
     }
 });
