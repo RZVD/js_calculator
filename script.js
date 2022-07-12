@@ -7,9 +7,7 @@ let nums = [];
 
 let order = [];
 
-
 let previousOperation = false;
-
 
 function isOperator(char) {
     return ['+','-','*','÷'].some( op => char === op);
@@ -17,7 +15,14 @@ function isOperator(char) {
 
 function process(char){
     let newStr = '';
-    for (const element of char) {
+    let i;
+    if(char[0] === '-' || char[0] === '+') {
+        i = 1;
+        newStr += char[0];
+    }
+    else i = 0;  
+    for (i ; i < char.length; i++) {
+        const element = char[i];
         if(isOperator(element)){
             order.push(element);
             newStr += ' ';
@@ -41,7 +46,7 @@ function reduce(){
 }
 
 function evaluate(char){
-    nums = process(char).split(' ').map(x => parseInt(x));
+    nums = process(char).split(' ').map(x => parseFloat(x));
     let ans = reduce();
     displayValue = ans;
 }
@@ -71,6 +76,7 @@ function updateDisplay(char){ // from buttons
                 displayValue = '0';
                 nums = [];
                 order = [];
+                previousOperation = false;
             }
             else if(char === 'Delete'){ 
                 if(displayValue.length >= 2) {
@@ -78,8 +84,14 @@ function updateDisplay(char){ // from buttons
                 }
                 else displayValue = '0';
             }
+            else if(char === '.'){
+                displayValue += char;
+            }
             else{
                 evaluate(displayValue);
+                nums = [];
+                order = [];
+                previousOperation = false;
             }
         }
     }
@@ -87,6 +99,11 @@ function updateDisplay(char){ // from buttons
 }
 display.appendChild(displayPara);
 
+
+function divByZero(){
+    alert("can't divide by 0");
+    updateDisplay('Clear');
+}
 function add(a, b) {
     return a + b;   
 }
@@ -97,7 +114,7 @@ function multiply(a, b){
     return a * b;
 }
 function divide(a, b){
-    return b === 0 ? null : a / b;    
+    return b === 0 ? divByZero() : a / b;    
 }
 
 function operate(a, b, operation){
