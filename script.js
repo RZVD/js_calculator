@@ -8,6 +8,8 @@ let nums = [];
 let order = [];
 
 
+let previousOperation = false;
+
 
 function isOperator(char) {
     return ['+','-','*','÷'].some( op => char === op);
@@ -33,6 +35,7 @@ function reduce(){
         nums.shift();
         nums.unshift(step);
         order.shift();
+        
     }
     return nums[0];
 }
@@ -40,21 +43,28 @@ function reduce(){
 function evaluate(char){
     nums = process(char).split(' ').map(x => parseInt(x));
     let ans = reduce();
-    return ans;
+    displayValue = ans;
 }
 
 function updateDisplay(char){ // from buttons
-    let maybeNumber = parseInt(char);
+    let maybeNumber = parseFloat(char);
     if(!isNaN(maybeNumber)){
         if(displayValue === '0') displayValue = char;
-        else displayValue += maybeNumber;
+        else displayValue += char;
     }
     else{
         if(isOperator(char)){
             if(isOperator(displayValue[displayValue.length - 1])) {
                 displayValue = displayValue.slice(0, -1) + char;
             }
-            else displayValue += char;
+            else if(!previousOperation){
+                displayValue += char;
+                previousOperation = true;
+            }
+            else{
+                evaluate(displayValue);
+                displayValue += char;
+            }
         }
         else{
             if(char === 'Clear') {
@@ -69,7 +79,7 @@ function updateDisplay(char){ // from buttons
                 else displayValue = '0';
             }
             else{
-                evaluate()
+                evaluate(displayValue);
             }
         }
     }
